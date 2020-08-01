@@ -15,7 +15,9 @@ public class EditRecuriterServlet2 extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		
 		String sid=request.getParameter("id");
+		
 		int id=Integer.parseInt(sid);
+		
 		String role = request.getParameter("recuriterrole");
 
 		String firstname = request.getParameter("recuriterfirstname");
@@ -57,9 +59,11 @@ public class EditRecuriterServlet2 extends HttpServlet {
 		
 		int status = RecuriterDao.update(e);
 		if(status>0){
-			response.sendRedirect("ViewAdminServlet");
+			out.println("<b style='font-family:Times New Roman;font-size:large;color:green'>Details Updated Successfully</b>");
+			request.getRequestDispatcher("recuriter.jsp").forward(request, response);
 		}else{
-			out.println("Sorry! unable to update record");
+			out.println("<b style='font-family:Times New Roman;font-size:large;color:red'>Sorry...Unable to Update Details! !</b>");
+			request.getRequestDispatcher("UpdateRecuriterServlet").include(request, response);
 		}
 		
 		out.close();

@@ -2,7 +2,7 @@ package com.recuriter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +14,8 @@ public class SaveRecuriterServlet extends HttpServlet {
 		response.setContentType("text/html");
 		
 		PrintWriter out=response.getWriter();
+		
+		String usernamedb = "";
 		
 		String role = request.getParameter("recuriterrole");
 
@@ -38,6 +40,27 @@ public class SaveRecuriterServlet extends HttpServlet {
 		String mobilenumber = request.getParameter("recuritermobilenumber");
 
 		String address = request.getParameter("recuriteraddress");
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jobportal", "root", "root");
+
+			Statement st = con.createStatement();
+
+			ResultSet rs = st.executeQuery("select * from recuriter where username='" + username + "'");
+
+			while (rs.next()) 
+			{	
+				usernamedb = rs.getString(5);
+			}
+			if (username.equals(usernamedb)) 
+			{
+				out.println("<b style='font-family:Times New Roman;font-size:large;color:red'>Username already exists...Please try with new Username</b>");
+				request.getRequestDispatcher("recuriter_registration.jsp").include(request, response);
+			}
+			else
+			{
 		
 		Recuriter e=new Recuriter();
 		e.setRole(role);
@@ -56,13 +79,20 @@ public class SaveRecuriterServlet extends HttpServlet {
 		int status=RecuriterDao.save(e);
 		
 		if(status>0){
-			out.print("<p>You have Registered successfully!</p>");
-			request.getRequestDispatcher("recuriter_login.jsp").include(request, response);
+			out.print("<b style='font-family:Times New Roman;font-size:large;color:green'>You have Registered successfully...Please Login with ur Credentials!</b>");
+			request.getRequestDispatcher("recuriter_login.jsp").forward(request, response);
 		}else{
-			out.println("Sorry! Unable to Register..Please try again...");
+			out.print("<b style='font-family:Times New Roman;font-size:large;color:red'>Sorry! Unable to Register..Please try again...</b>");
+			request.getRequestDispatcher("recuriter_registration.jsp").include(request, response);
 		}
 		
 		out.close();
 	}
 
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
+

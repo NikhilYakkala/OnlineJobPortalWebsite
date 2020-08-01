@@ -40,9 +40,10 @@ public class EditAdminServlet2 extends HttpServlet {
 		
 		int status=AdminDao.update(e);
 		if(status>0){
-			response.sendRedirect("ViewAdminServlet");
+			out.println("<h3 style='font-family:Times New Roman;font-size:white;color:white'>Details Updated Successfully</h3>");
+			request.getRequestDispatcher("admin.jsp").include(request, response);
 		}else{
-			out.println("Sorry! unable to update record");
+			out.println("<h3 style='font-family:Times New Roman;font-size:large;color:white'>Sorry...Unable to Update Details! !</h3>");
 		}
 		
 		out.close();

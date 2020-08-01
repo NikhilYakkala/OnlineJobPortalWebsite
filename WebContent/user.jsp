@@ -1,125 +1,78 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<!DOCTYPE html>  
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>User Home Page</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Admin Home Page</title>
 <style>
-  .Large
-   {
-   width:100%;
-   background-color:yellow;
-   }
-   .maindiv
-   {
-   float:left;
-      width:50%;
-	
-   }
-   .Seconddiv
-   {
-   float:right;
-   width:50%;
-   margin:-5px;
-   }
-   .main{
-    display:flex;
-   }
-   .main h2{
-   margin-left:100px;
-   }
-   .nav{
-	display:flex;
-	justify-content:space-around;
-	background-color: #EAECED;
-	height:35px;
-	}
-	.nav li{
-	padding-top:10px;
-	flex:1;
-	list-style:none;
-	text-align:center;
-	font-family: Times New Roman;
-	font-size: 18px;
-	}
-	.nav li:hover{
-	background-color:orange;
-	}
-	.nav li a{
-	color:black;
-	text-decoration:none;
-	}
-	h3{
-	color:white;
-	text-align:center;
-	font-family:Times New Roman;
-	font-size:25px;
-	}
-	h1{
-	color:white;
-	text-align:center;
-	font-family:Times New Roman;
-	}
-	body{
-		margin:0;
-	background:url(https://images.hdqwalls.com/wallpapers/material-design-dark-orange-4k-7h.jpg) fixed;
-	background-size: cover;
-	}
-	label,p{
-	color:white;
-	text-align:center;
-	font-family:Times New Roman;
-	font-size:18px;
-	text-decoration: none;
-	}
-	a
-	{
-	text-decoration: none;
-	}
-   </style>
-<script type="text/javascript">
-
-function validateData() {
-  
-	if( document.form.adminname.value == "" || document.form.adminname.value == null) {
-       alert( "Please Provide Username to Proceed further...!" );
-       return false;
-    }
-    if( document.form.adminpassword.value == "" || document.form.adminpassword.value == null) {
-       alert( "Please Provide Password to Proceed further...!" );
-       return false;
-    }
-    return true;
- }
-
-</script>
+li, a {
+	font-family: 'Times New Roman';
+	font-size: 20px;
+	color : white;
+}
+body
+{
+padding-top: 100px;
+}
+h1
+{
+	font-family: 'Times New Roman';
+	color : white;
+	text-align: center;
+}
+body { 
+  background-image: url("images/website_background_laptop.jpg");
+  background-repeat: no-repeat;
+  margin: 0;
+  background-size: cover;
+}
+</style>
 </head>
 <body>
-<div class="main">
-   <p><a href="index.html"><img src="https://s.clipartkey.com/mpngs/s/16-164494_career-clipart-find-a-job-cartoon.png" width="200" height="100"></a></p>
-   &nbsp; &nbsp;  <h1>Online Job Portal System</h1>
-   </div>
-   <ul class="nav">
-	<li><a href="index.html">Home</a></li>
-	<li><a href="services.jsp">Services</a></li>
-	<li><a href="aboutus.jsp">About Us</a></li>
-	<li><a href="contactus.jsp">Contact Us</a></li>
-	<li><a href="UserLogout">Logout</a>
-	</ul>
-	 <%
-	
-	 response.setHeader("cache-control", "no-cache,no-store,must-revalidate"); //Http Version 1.1
-	 
-	 response.setHeader("Pragma", "no-cache");  // Http Version 1.0
-	 
-	 response.setHeader("Expires", "0");
+	<nav class="navbar navbar-dark btn-danger navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+			<a class="navbar-brand" href="admin.jsp">
+    <img src="images/job_portal_logo.png" alt="logo" style="width:50px;height:35px;">
+  </a>
+				<a class="navbar-brand" href="user.jsp">Online Job Portal</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="user.jsp">Home</a></li>
+				<li><a href="searchjob.jsp">Search Job</a>
+				<li><a href="ViewAppliedJobServlet">View Applied Jobs</a>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="user.jsp">Welcome, ${user}<span
+						class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="UpdateUserServlet">Update Profile</a></li>
+						<li><a href="Userupdatepassword.jsp">Change Password</a></li>
+						<li><a href="UserLogout">Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</nav>
+	<%
+		response.setHeader("cache-control", "no-cache,no-store,must-revalidate");
 
-	if(session.getAttribute("user")==null)
-	{
-		response.sendRedirect("Login.jsp");
-	}
-	
-	%> 
-	
+		response.setHeader("Pragma", "no-cache");
+
+		response.setHeader("Expires", "0");
+
+		if (session.getAttribute("user") == null) {
+			response.sendRedirect("user_login.jsp");
+		}
+	%>
+	<h1>Welcome to User Home Page</h1>
 </body>
 </html>
